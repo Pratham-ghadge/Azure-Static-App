@@ -1,0 +1,387 @@
+
+1. Create two Virtual Machines in the same network.
+
+While creating the first VM:
+
+Go to the Networking tab.
+Create or select a Virtual Network named vm-net.
+Allow all inbound ports.
+Create the VM.
+
+While creating the second VM:
+
+Go to the Networking tab.
+Select the same Virtual Network vm-net.
+Allow all inbound ports.
+Create the VM.
+--------------------------------------------------
+2. Login to the first VM:
+ssh azureuser@<sender-vm-ip>
+
+Enter the password.
+
+Open another terminal and login to the second VM:
+ssh azureuser@<receiver-vm-ip>
+
+Enter the password.
+----------------------------------------------------
+
+3. Create a text file in the sender VM:
+nano demo.txt
+
+Write some text and save the file.
+
+------------------------------------------------------
+
+4. Transfer the file from sender VM to receiver VM using scp:
+scp demo.txt azureuser@<receiver-vm-ip>:/home/azureuser/
+
+scp demo.txt azureuser@104.214.172.100:/home/azureuser/
+
+Enter the receiver VM password when asked.
+
+Go to the receiver VM and check the file:
+ls
+
+You will see demo.txt.
+------------------------------------------------------------
+If any permission error occurs in the sender VM, use:
+chmod 777 demo.txt
+
+or
+
+chmod 750 demo.txt
+
+Then send the file again using the scp command.
+
+
+
+
+
+====================================================
+FILE SHARING BETWEEN TWO VMs
+(SAME NETWORK USING PASSWORD)
+====================================================
+
+
+====================================================
+STEP 1 — CREATE FIRST VM
+====================================================
+
+Create Ubuntu VM
+
+While creating VM:
+
+Go to:
+Networking Tab
+
+Create Virtual Network
+
+Example:
+
+vm-net
+
+
+Allow Inbound Ports:
+
+Allow All Ports
+
+
+Create VM
+
+
+====================================================
+STEP 2 — CREATE SECOND VM
+====================================================
+
+Create another Ubuntu VM
+
+Go to:
+Networking Tab
+
+IMPORTANT:
+
+Select SAME Virtual Network
+
+Example:
+
+vm-net
+
+
+Allow Inbound Ports:
+
+Allow All Ports
+
+
+Create VM
+
+
+====================================================
+STEP 3 — LOGIN TO FIRST VM
+====================================================
+
+Run:
+
+ssh azureuser@VM1_PUBLIC_IP
+
+
+Example:
+
+ssh azureuser@20.244.10.100
+
+
+Enter password
+
+
+====================================================
+STEP 4 — LOGIN TO SECOND VM
+====================================================
+
+Open another terminal
+
+Run:
+
+ssh azureuser@VM2_PUBLIC_IP
+
+
+Example:
+
+ssh azureuser@20.244.10.101
+
+
+Enter password
+
+
+====================================================
+STEP 5 — CREATE FILE IN SENDER VM
+====================================================
+
+Run on VM1:
+
+nano demo.txt
+
+
+Write anything inside file
+
+Example:
+
+Hello From VM1
+
+
+Save:
+
+CTRL + X
+Press Y
+Press ENTER
+
+
+====================================================
+STEP 6 — SEND FILE TO RECEIVER VM
+====================================================
+
+Run on VM1:
+
+scp demo.txt azureuser@VM2_PUBLIC_IP:/home/azureuser/
+
+
+Example:
+
+scp demo.txt azureuser@20.244.10.101:/home/azureuser/
+
+
+Enter VM2 password
+
+
+====================================================
+STEP 7 — CHECK FILE ON RECEIVER VM
+====================================================
+
+Go to VM2
+
+Run:
+
+ls
+
+
+You will get:
+
+demo.txt
+
+
+Open file:
+
+cat demo.txt
+
+
+====================================================
+IF ERROR COMES
+====================================================
+
+Run on sender VM:
+
+chmod 777 demo.txt
+
+
+Then retry scp command.
+
+
+====================================================
+FILE SHARING COMPLETED
+====================================================
+
+
+
+
+====================================================
+FILE SHARING BETWEEN TWO VMs
+(USING PEM KEY)
+====================================================
+
+
+====================================================
+STEP 1 — LOGIN TO FIRST VM USING PEM KEY
+====================================================
+
+Give permission to key:
+
+chmod 400 vm_key.pem
+
+
+Login:
+
+ssh -i vm_key.pem azureuser@VM1_PUBLIC_IP
+
+
+Example:
+
+ssh -i vm_key.pem azureuser@20.244.10.100
+
+
+====================================================
+STEP 2 — LOGIN TO SECOND VM USING PEM KEY
+====================================================
+
+Open another terminal
+
+Run:
+
+ssh -i vm_key.pem azureuser@VM2_PUBLIC_IP
+
+
+Example:
+
+ssh -i vm_key.pem azureuser@20.244.10.101
+
+
+====================================================
+STEP 3 — TRANSFER PEM KEY TO SENDER VM
+====================================================
+
+Run from LOCAL MACHINE:
+
+scp -i vm_key.pem vm_key.pem azureuser@VM1_PUBLIC_IP:/home/azureuser/
+
+
+Example:
+
+scp -i vm_key.pem vm_key.pem azureuser@20.244.10.100:/home/azureuser/
+
+
+====================================================
+STEP 4 — GIVE PERMISSION TO KEY INSIDE VM1
+====================================================
+
+Login to VM1
+
+Run:
+
+chmod 400 vm_key.pem
+
+
+====================================================
+STEP 5 — CREATE FILE IN VM1
+====================================================
+
+Run:
+
+nano demo.txt
+
+
+Write anything inside file
+
+Example:
+
+Hello From VM1
+
+
+Save:
+
+CTRL + X
+Press Y
+Press ENTER
+
+
+====================================================
+STEP 6 — SEND FILE USING PEM KEY
+====================================================
+
+Run on VM1:
+
+scp -i vm_key.pem demo.txt azureuser@VM2_PUBLIC_IP:/home/azureuser/
+
+
+Example:
+
+scp -i vm_key.pem demo.txt azureuser@20.244.10.101:/home/azureuser/
+
+
+====================================================
+STEP 7 — VERIFY FILE ON VM2
+====================================================
+
+Go to VM2
+
+Run:
+
+ls
+
+
+You will get:
+
+demo.txt
+
+
+Open file:
+
+cat demo.txt
+
+
+====================================================
+IF ERROR COMES
+====================================================
+
+1. Permission denied
+
+Run:
+
+chmod 400 vm_key.pem
+
+
+2. File not sending
+
+Run:
+
+chmod 777 demo.txt
+
+
+3. SSH failed
+
+Check:
+- Correct VM IP
+- Correct key
+- Same network
+
+
+====================================================
+COMPLETED
+====================================================
