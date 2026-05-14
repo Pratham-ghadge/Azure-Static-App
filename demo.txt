@@ -1,0 +1,618 @@
+sudo apt update
+sudo apt upgrade -y
+
+sudo apt install nginx -y
+sudo systemctl status nginx
+sudo systemctl enable nginx
+
+Go to nginx web folder:
+cd /var/www/html
+
+Remove default nginx page:
+sudo rm -f index.nginx-debian.html
+
+
+Create main website file:
+sudo nano index.html
+
+Write your HTML code inside this file.
+
+
+Example:
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Website</title>
+</head>
+<body>
+    <h1>Website Hosted Successfully</h1>
+</body>
+</html>
+
+
+Run file permission:
+sudo chmod -R 755 /var/www/html
+sudo chown -R www-data:www-data /var/www/html
+
+
+Restart nginx:
+sudo systemctl restart nginx
+
+
+Open browser:
+http://YOUR_VM_IP
+Example:
+http://20.244.10.100
+
+
+
+
+
+
+
+========================================================
+STATIC WEBSITE HOSTING ON VM
+(UBUNTU + NGINX)
+========================================================
+
+
+========================================================
+STEP 1 — CREATE VIRTUAL MACHINE
+========================================================
+
+Create Ubuntu 22.04 VM
+
+Recommended:
+Ubuntu Server 22.04 LTS
+
+
+While creating VM enable:
+
+[✓] Public IP Address
+
+
+Open Inbound Ports:
+
+Port 22   → SSH
+Port 80   → HTTP
+Port 443  → HTTPS (Optional)
+
+
+Create VM using:
+
+Username + Password Authentication
+
+
+Example:
+
+Username: azureuser
+Password: your_password
+
+
+========================================================
+STEP 2 — CONNECT TO VM
+========================================================
+
+--------------------------------------------------------
+OPTION 1 — CONNECT USING PASSWORD
+--------------------------------------------------------
+
+Connect to VM:
+
+ssh username@YOUR_VM_IP
+
+
+Example:
+
+ssh azureuser@20.244.10.100
+
+
+Then enter your VM password
+
+
+--------------------------------------------------------
+OPTION 2 — CONNECT USING PEM KEY
+--------------------------------------------------------
+
+If you created VM using SSH key:
+
+Give permission:
+
+chmod 400 vm_key.pem
+
+
+Connect:
+
+ssh -i vm_key.pem azureuser@YOUR_VM_IP
+
+
+Example:
+
+ssh -i vm_key.pem azureuser@20.244.10.100
+
+
+========================================================
+STEP 3 — UPDATE SERVER
+========================================================
+
+Run:
+
+sudo apt update
+
+sudo apt upgrade -y
+
+
+========================================================
+STEP 4 — INSTALL NGINX
+========================================================
+
+Install nginx:
+
+sudo apt install nginx -y
+
+
+Check nginx status:
+
+sudo systemctl status nginx
+
+
+Enable nginx auto start:
+
+sudo systemctl enable nginx
+
+
+========================================================
+STEP 5 — OPEN WEBSITE DIRECTORY
+========================================================
+
+Go to nginx web folder:
+
+cd /var/www/html
+
+
+========================================================
+STEP 6 — REMOVE DEFAULT NGINX PAGE
+========================================================
+
+Remove default nginx page:
+
+sudo rm -f index.nginx-debian.html
+
+
+========================================================
+STEP 7 — CREATE WEBSITE FILES
+========================================================
+
+Create main website file:
+
+sudo nano index.html
+
+
+Write your HTML code inside this file.
+
+
+Example:
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Website</title>
+</head>
+<body>
+    <h1>Website Hosted Successfully</h1>
+</body>
+</html>
+
+
+You can:
+- Write your own HTML code
+- Copy and paste website code
+- Paste code from GitHub
+- Add CSS and JavaScript manually
+
+
+Save and Exit:
+
+CTRL + X
+Press Y
+Press ENTER
+
+
+========================================================
+OPTIONAL — CREATE CSS FILE
+========================================================
+
+Create CSS file:
+
+sudo nano style.css
+
+
+Example:
+
+body {
+    font-family: Arial;
+    text-align: center;
+}
+
+
+Save and Exit:
+
+CTRL + X
+Press Y
+Press ENTER
+
+
+========================================================
+OPTIONAL — CREATE JAVASCRIPT FILE
+========================================================
+
+Create JS file:
+
+sudo nano script.js
+
+
+Example:
+
+console.log("Website Working");
+
+
+Save and Exit:
+
+CTRL + X
+Press Y
+Press ENTER
+
+
+========================================================
+STEP 8 — FIX FILE PERMISSIONS
+========================================================
+
+Run:
+
+sudo chmod -R 755 /var/www/html
+
+sudo chown -R www-data:www-data /var/www/html
+
+
+========================================================
+STEP 9 — VERIFY WEBSITE FILES
+========================================================
+
+Check files:
+
+ls /var/www/html
+
+
+You should see:
+
+index.html
+
+
+Example:
+
+index.html
+style.css
+script.js
+
+
+IMPORTANT:
+
+Your main file must be:
+
+index.html
+
+
+========================================================
+STEP 10 — RESTART NGINX
+========================================================
+
+Restart nginx:
+
+sudo systemctl restart nginx
+
+
+Reload nginx:
+
+sudo systemctl reload nginx
+
+
+Check nginx status:
+
+sudo systemctl status nginx
+
+
+========================================================
+STEP 11 — TEST WEBSITE
+========================================================
+
+Open browser:
+
+http://YOUR_VM_IP
+
+
+Example:
+
+http://20.244.10.100
+
+
+If everything is correct:
+- Website will open successfully
+- CSS will load correctly
+- JavaScript will work correctly
+
+
+========================================================
+OPTIONAL — FIX NANO EDITOR
+========================================================
+
+If nano editor shows strange symbols or does not work correctly:
+
+Run:
+
+export TERM=xterm
+
+
+Then open file again:
+
+sudo nano index.html
+
+
+========================================================
+USEFUL NGINX COMMANDS
+========================================================
+
+Check nginx status:
+
+sudo systemctl status nginx
+
+
+Restart nginx:
+
+sudo systemctl restart nginx
+
+
+Reload nginx:
+
+sudo systemctl reload nginx
+
+
+Stop nginx:
+
+sudo systemctl stop nginx
+
+
+Start nginx:
+
+sudo systemctl start nginx
+
+
+Enable nginx on boot:
+
+sudo systemctl enable nginx
+
+
+Test nginx config:
+
+sudo nginx -t
+
+
+========================================================
+COMMON ERRORS AND SOLUTIONS
+========================================================
+
+--------------------------------------------------------
+ERROR 1 — Permission Denied
+--------------------------------------------------------
+
+Problem:
+
+Permission denied
+
+
+Solution:
+
+Run:
+
+sudo chmod -R 755 /var/www/html
+
+sudo chown -R www-data:www-data /var/www/html
+
+
+========================================================
+ERROR 2 — NGINX DEFAULT PAGE SHOWING
+========================================================
+
+Problem:
+
+Browser shows:
+Welcome to nginx
+
+
+Solution:
+
+Remove default nginx page:
+
+sudo rm -f /var/www/html/index.nginx-debian.html
+
+
+Restart nginx:
+
+sudo systemctl restart nginx
+
+
+========================================================
+ERROR 3 — WEBSITE NOT OPENING
+========================================================
+
+Problem:
+
+This site can’t be reached
+
+
+Solution:
+
+Check nginx status:
+
+sudo systemctl status nginx
+
+
+Restart nginx:
+
+sudo systemctl restart nginx
+
+
+Verify inbound rules:
+- Port 80 must be open
+
+
+========================================================
+ERROR 4 — 404 NOT FOUND
+========================================================
+
+Problem:
+
+404 Not Found
+
+
+Solution:
+
+Check files:
+
+ls /var/www/html
+
+
+Make sure:
+index.html exists
+
+
+If missing:
+
+sudo nano /var/www/html/index.html
+
+
+========================================================
+ERROR 5 — CSS OR JS NOT WORKING
+========================================================
+
+Problem:
+
+Website design broken
+
+
+Solution:
+
+Check files exist:
+
+ls /var/www/html
+
+
+Make sure:
+- style.css exists
+- script.js exists
+
+
+Verify paths in HTML file.
+
+
+Correct:
+
+<link rel="stylesheet" href="style.css">
+
+<script src="script.js"></script>
+
+
+========================================================
+ERROR 6 — NGINX FAILED TO START
+========================================================
+
+Problem:
+
+Nginx service failed
+
+
+Solution:
+
+Check nginx config:
+
+sudo nginx -t
+
+
+Fix errors shown in terminal.
+
+
+Restart nginx:
+
+sudo systemctl restart nginx
+
+
+========================================================
+ERROR 7 — NANO EDITOR NOT WORKING
+========================================================
+
+Problem:
+
+Nano editor broken
+
+
+Solution:
+
+Run:
+
+export TERM=xterm
+
+
+Then retry:
+
+sudo nano index.html
+
+
+========================================================
+ERROR 8 — WEBSITE OPENS BUT IMAGES NOT SHOWING
+========================================================
+
+Problem:
+
+Images missing
+
+
+Solution:
+
+Place images inside:
+
+/var/www/html
+
+
+Example:
+
+/var/www/html/logo.png
+
+
+Use correct image path:
+
+<img src="logo.png">
+
+
+========================================================
+ERROR 9 — CHANGES NOT REFLECTING
+========================================================
+
+Problem:
+
+Website still shows old content
+
+
+Solution:
+
+Restart nginx:
+
+sudo systemctl restart nginx
+
+
+Clear browser cache:
+CTRL + SHIFT + R
+
+
+========================================================
+STATIC WEBSITE DEPLOYMENT COMPLETED
+========================================================
